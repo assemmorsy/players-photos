@@ -29,6 +29,17 @@ const router = createRouter({
       component: () => import("@/views/HomeView.vue"),
     },
     {
+      path: "/calc",
+      name: "calc",
+      component: () => import("@/views/CalculatorView.vue"),
+    },
+    {
+      path: "/qayyed",
+      name: "qayyed",
+      component: () => import("@/views/Qayyed.vue"),
+      beforeEnter: shouldLogin,
+    },
+    {
       path: "/admin",
       name: "admin",
       component: () => import("@/views/AdminView.vue"),
@@ -36,22 +47,38 @@ const router = createRouter({
         {
           path: "",
           name: "board",
-          component: () => import("@/components/BoardPlayers.vue"),
+          component: () => import("@/components/board/BoardPlayers.vue"),
         },
         {
           path: "all-players",
           name: "all-players",
-          component: () => import("@/components/AllPlayers.vue"),
+          component: () => import("@/components/players/AllPlayers.vue"),
         },
         {
           path: "add-player",
           name: "add-player",
-          component: () => import("@/components/AddPlayer.vue"),
+          component: () => import("@/components/players/AddPlayer.vue"),
         },
         {
           path: "update-player/:id",
           name: "update-player",
-          component: () => import("@/components/UpdatePlayer.vue"),
+          component: () => import("@/components/players/UpdatePlayer.vue"),
+          props: true,
+        },
+        {
+          path: "all-sponcers",
+          name: "all-sponcers",
+          component: () => import("@/components/sponcers/AllSponcers.vue"),
+        },
+        {
+          path: "add-sponcer",
+          name: "add-sponcer",
+          component: () => import("@/components/sponcers/AddSponcer.vue"),
+        },
+        {
+          path: "update-sponcer/:id",
+          name: "update-sponcer",
+          component: () => import("@/components/sponcers/UpdateSponcer.vue"),
           props: true,
         },
       ],

@@ -2,13 +2,13 @@
   <div>
     <form @submit.prevent="handleSubmit">
       <div class="m-3 d-flex justify-content-between align-items-end">
-        <label for="name" class="form-label d-inline-block me-3">Name</label>
+        <label for="name" class="form-label d-inline-block me-3">الاسم</label>
         <input
           type="text"
           class="form-control d-inline-block"
           name="name"
           id="name"
-          placeholder="Player Name"
+          placeholder="اسم اللاعب"
           v-model="player.name"
           required
         />
@@ -19,7 +19,7 @@
           class="form-label d-inline-block me-3"
           style="width: 19%"
         >
-          <i class="bi bi-image m-2"></i>Image</label
+          <i class="bi bi-image m-2"></i>الصورة الشخصية</label
         >
         <input
           type="file"
@@ -65,7 +65,7 @@
           :disabled="uploadImageloading || saveDataloading"
           type="submit"
         >
-          Save
+          حفظ
           <span
             v-if="uploadImageloading || saveDataloading"
             class="spinner-border spinner-border-sm ms-3"

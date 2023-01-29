@@ -1,14 +1,14 @@
 <template>
   <main>
-    <div class="card text-left m-5" style="width: 40rem">
+    <div class="card text-left m-5" style="width: 90%">
       <div class="card-header d-flex flex-row justify-content-between">
-        <h2 class="d-inline-block mt-2">Admin Panel</h2>
+        <h2 class="d-inline-block mt-2">لوحة التحكم</h2>
         <button
           class="d-inline-block btn btn-primary px-3"
           @click.prevent="handleLogout"
           :disabled="loading"
         >
-          Logout
+          تسجيل خروج
           <span
             v-if="loading"
             class="spinner-border spinner-border-sm ms-3"
@@ -25,7 +25,7 @@
               class="nav-link"
               :class="route.path === '/admin' ? 'active' : ''"
               :to="{ name: 'board' }"
-              >Board Players</router-link
+              >التحكم بالمجلس</router-link
             >
           </li>
           <li class="nav-item">
@@ -33,7 +33,7 @@
               class="nav-link"
               :class="route.path === '/admin/all-players' ? 'active' : ''"
               :to="{ name: 'all-players' }"
-              >All Players</router-link
+              >جميع اللاعبين</router-link
             >
           </li>
           <li class="nav-item">
@@ -41,8 +41,8 @@
               class="nav-link"
               :class="route.path === '/admin/add-player' ? 'active' : ''"
               :to="{ name: 'add-player' }"
-              >Add Player</router-link
-            >
+              >اضافة لاعب
+            </router-link>
           </li>
           <li
             class="nav-item"
@@ -53,13 +53,48 @@
               :class="
                 route.path.includes('/admin/update-player') ? 'active' : ''
               "
-              >Update Player</a
+              >تعديل لاعب</a
             >
           </li>
+
+          <li class="nav-item">
+            <router-link
+              class="nav-link"
+              :class="route.path === '/admin/all-sponcers' ? 'active' : ''"
+              :to="{ name: 'all-sponcers' }"
+              >جميع الممولين</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link
+              class="nav-link"
+              :class="route.path === '/admin/add-sponcer' ? 'active' : ''"
+              :to="{ name: 'add-sponcer' }"
+              >اضافة ممول
+            </router-link>
+          </li>
+          <li
+            class="nav-item"
+            v-if="route.path.includes('/admin/update-sponcer')"
+          >
+            <a
+              class="nav-link"
+              :class="
+                route.path.includes('/admin/update-sponcer') ? 'active' : ''
+              "
+              >تعديل ممول
+            </a>
+          </li>
         </ul>
-        <router-view :players="players" :board="board" :ENV="ENV"></router-view>
+        <router-view
+          :players="players"
+          :board="board"
+          :ENV="ENV"
+          :sponcers="sponcers"
+        ></router-view>
         <div class="errors text-danger">
           <p>{{ loadingPlayersError }}</p>
+          <p>{{ loadingSponcersError }}</p>
           <p>{{ boardError }}</p>
           <p>{{ logoutError }}</p>
         </div>
@@ -72,13 +107,15 @@
 import { onBeforeMount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import useLogout from "@/composables/useLogout";
-import getCollection from "@/composables/getCollection";
+import getCollection from "@/composables/getCollectionAsDictionary";
 import getDocument from "@/composables/getDocument";
 
-const ENV = "dev";
+const ENV = "prod";
 
 const { error: loadingPlayersError, documents: players } =
   getCollection("players");
+const { error: loadingSponcersError, documents: sponcers } =
+  getCollection("sponcers");
 const { error: boardError, doc: board, getDoc } = getDocument("board");
 onBeforeMount(async () => {
   await getDoc(ENV);
@@ -105,5 +142,6 @@ main {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  font-family: "CairoSemiBold";
 }
 </style>

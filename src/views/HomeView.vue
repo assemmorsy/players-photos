@@ -1,7 +1,7 @@
 <template>
-  <div class="main" v-if="board">
-    <template v-if="board.top">
-      <img src="@/assets/top-square.svg" id="top-box" class="box" />
+  <div class="main" v-if="board && players">
+    <template v-if="board.team1.top">
+      <img src="@/assets/images/top-square.svg" id="top-box" class="box" />
 
       <preview
         id="top-image"
@@ -9,59 +9,70 @@
         :style="`opacity:${parseInt(board.opacity) / 100}`"
         :width="260"
         :height="260"
-        :image="board.top.image"
-        :coordinates="board.top.coordinates"
+        :image="players[board.team1.top].image"
+        :coordinates="players[board.team1.top].coordinates"
       />
     </template>
 
-    <template v-if="board.bottom">
-      <img src="@/assets/bottom-square.svg" id="bottom-box" class="box" />
+    <template v-if="board.team1.bottom">
+      <img
+        src="@/assets/images/bottom-square.svg"
+        id="bottom-box"
+        class="box"
+      />
       <preview
         id="bottom-image"
         class="image rounded-3"
         :style="`opacity:${parseInt(board.opacity) / 100}`"
         :width="260"
         :height="260"
-        :image="board.bottom.image"
-        :coordinates="board.bottom.coordinates"
+        :image="players[board.team1.bottom].image"
+        :coordinates="players[board.team1.bottom].coordinates"
       />
     </template>
 
-    <template v-if="board.right">
-      <img src="@/assets/right-square.svg" id="right-box" class="box" />
+    <template v-if="board.team2.right">
+      <img src="@/assets/images/right-square.svg" id="right-box" class="box" />
       <preview
         id="right-image"
         class="image rounded-3"
         :style="`opacity:${parseInt(board.opacity) / 100}`"
         :width="260"
         :height="260"
-        :image="board.right.image"
-        :coordinates="board.right.coordinates"
+        :image="players[board.team2.right].image"
+        :coordinates="players[board.team2.right].coordinates"
       />
     </template>
 
-    <template v-if="board.left">
-      <img src="@/assets/left-square.svg" id="left-box" class="box" />
+    <template v-if="board.team2.left">
+      <img src="@/assets/images/left-square.svg" id="left-box" class="box" />
       <preview
         id="left-image"
         class="image rounded-3"
         :style="`opacity:${parseInt(board.opacity) / 100}`"
         :width="260"
         :height="260"
-        :image="board.left.image"
-        :coordinates="board.left.coordinates"
+        :image="players[board.team2.left].image"
+        :coordinates="players[board.team2.left].coordinates"
       />
     </template>
   </div>
 </template>
 
 <script setup>
+import { ref, watch } from "vue";
 import { Preview } from "vue-advanced-cropper";
 import { onBeforeMount } from "vue";
 import getDocument from "@/composables/getDocument";
+import getCollection from "@/composables/getCollectionAsDictionary";
+
 const { error: boardError, doc: board, getDoc } = getDocument("board");
+const { error: loadingPlayersError, documents: players } =
+  getCollection("players");
+const ENV = "prod";
+
 onBeforeMount(async () => {
-  await getDoc("dev");
+  await getDoc(ENV);
 });
 </script>
 

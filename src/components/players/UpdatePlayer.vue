@@ -1,16 +1,25 @@
 <template>
   <div class="card m-4" v-if="player && player !== -1">
     <div class="card-header">
-      Updating
+      تحديث بيانات اللاعب
       <span class="mark"
         >{{ player.name }}
         <span v-if="inBoard && inBoard.inBoard" class="mark">
-          <i :class="`bi ${icons[inBoard.direction]} d-inline-block `"></i>
+          <i :class="`bi ${icons[inBoard.direction]} d-inline-block`"></i>
         </span>
       </span>
-      Image
     </div>
     <div class="card-body">
+      <div class="mb-3 d-flex justify-content-around align-items-end">
+        <label for="name" class="form-label d-inline-block">اسم الاعب </label>
+        <input
+          type="text"
+          class="form-control d-inline-block w-75"
+          id="name"
+          v-model="player.name"
+        />
+      </div>
+
       <cropper
         ref="cropperElm"
         class="cropper"
@@ -34,7 +43,7 @@
         :disabled="updateDataloading || updateBoardloading"
         @click.prevent="handleUpdate"
       >
-        Update
+        تحديث
         <span
           v-if="updateDataloading || updateBoardloading"
           class="spinner-border spinner-border-sm ms-3"
@@ -45,7 +54,7 @@
       <router-link
         class="btn btn-outline-secondary"
         :to="{ name: 'all-players' }"
-        >cancel</router-link
+        >الغاء التحديث</router-link
       >
     </div>
   </div>
@@ -72,26 +81,23 @@ const router = useRouter();
 
 const player = computed(() => {
   if (props.players) {
-    const matches = props.players.filter((player) => {
-      return player.id === props.id;
-    });
-    return matches.length > 0 ? matches[0] : -1;
+    return props.players.hasOwnProperty(props.id)
+      ? props.players[props.id]
+      : -1;
   } else {
     return null;
   }
 });
 const inBoard = computed(() => {
-  let result = null;
-  if (props.board) {
-    result = { inBoard: false, direction: [] };
-    for (let dir in props.board) {
-      if (props.board[dir] && props.board[dir].id === props.id) {
-        result.inBoard = true;
-        result.direction.push(dir);
-      }
-    }
-  }
-  return result;
+  if (props.board?.team1.top === props.id)
+    return { inBoard: true, direction: "top" };
+  else if (props.board?.team1.bottom === props.id)
+    return { inBoard: true, direction: "bottom" };
+  else if (props.board?.team2.left === props.id)
+    return { inBoard: true, direction: "left" };
+  else if (props.board?.team2.right === props.id)
+    return { inBoard: true, direction: "right" };
+  else return { inBoard: false };
 });
 
 const icons = {
@@ -107,21 +113,12 @@ const {
   updateDoc,
 } = useDocument("players");
 
-const {
-  error: updateBoardError,
-  isPending: updateBoardloading,
-  updateDoc: updateBoard,
-} = useDocument("board");
-
 const handleUpdate = async () => {
   const { coordinates } = cropperElm.value.getResult();
-  if (inBoard.value.inBoard) {
-    inBoard.value.direction.forEach(async (dir) => {
-      props.board[dir].coordinates = coordinates;
-      await updateBoard(props.ENV, props.board);
-    });
-  }
-  await updateDoc(props.id, { coordinates: coordinates });
+  await updateDoc(props.id, {
+    coordinates: coordinates,
+    name: player.value.name,
+  });
   if (!updateDataError.value) {
     router.push({ name: "all-players" });
   }

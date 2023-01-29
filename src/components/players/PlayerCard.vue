@@ -3,7 +3,7 @@
     <div class="card-header text-center m-0">
       <h5 class="card-title m-0">
         {{ player.name }}
-        <span v-if="inBoard.inBoard" class="mark">
+        <span v-if="inBoard.inBoard" class="mark py-0">
           <i :class="`bi ${icons[inBoard.direction]} d-inline-block `"></i>
         </span>
       </h5>
