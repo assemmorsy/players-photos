@@ -40,12 +40,12 @@
     <div class="card-footer">
       <button
         class="btn btn-warning me-2"
-        :disabled="updateDataloading || updateBoardloading"
+        :disabled="updateDataloading"
         @click.prevent="handleUpdate"
       >
         تحديث
         <span
-          v-if="updateDataloading || updateBoardloading"
+          v-if="updateDataloading"
           class="spinner-border spinner-border-sm ms-3"
           role="status"
           aria-hidden="true"
@@ -66,7 +66,6 @@
   </div>
   <div class="text-danger">
     <p>{{ updateDataError }}</p>
-    <p>{{ updateBoardError }}</p>
   </div>
 </template>
 
@@ -75,7 +74,7 @@ import { ref, computed } from "vue";
 import { Cropper } from "vue-advanced-cropper";
 import { useRouter } from "vue-router";
 import useDocument from "@/composables/useDocument";
-const props = defineProps(["players", "board", "id", "ENV"]);
+const props = defineProps(["players", "sponcers", "board", "id", "ENV"]);
 const cropperElm = ref(null);
 const router = useRouter();
 

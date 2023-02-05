@@ -10,7 +10,16 @@
         position-relative
       "
     >
-      <div class="mb-3 col col-6">
+      <div
+        class="
+          mb-3
+          col col-6
+          d-flex
+          flex-column
+          align-items-center
+          justify-content-end
+        "
+      >
         <p
           type="text"
           class="
@@ -28,7 +37,16 @@
         </p>
       </div>
 
-      <div class="mb-3 col col-6">
+      <div
+        class="
+          mb-3
+          col col-6
+          d-flex
+          flex-column
+          align-items-center
+          justify-content-end
+        "
+      >
         <p
           type="text"
           class="
@@ -211,31 +229,38 @@ const total = computed(() => {
 
 const teamsNames = computed(() => {
   if (board.value && players.value) {
-    let names = {};
-    if (board.value.team1.top && board.value.team1.bottom) {
-      names.team1 = `${players.value[board.value.team1.top].name} | ${
-        players.value[board.value.team1.bottom].name
-      }`;
-    } else if (!board.value.team1.top && board.value.team1.bottom) {
-      names.team1 = `${players.value[board.value.team1.bottom].name}`;
-    } else if (board.value.team1.top && !board.value.team1.bottom) {
-      names.team1 = `${players.value[board.value.team1.top].name}`;
-    } else if (!board.value.team1.top && !board.value.team1.bottom) {
-      names.team1 = `لم يتم تحديد لاعبى الفريق`;
-    }
+    if (board.value.namesControl === "auto") {
+      let names = {};
+      if (board.value.team1.top && board.value.team1.bottom) {
+        names.team1 = `${players.value[board.value.team1.top].name} | ${
+          players.value[board.value.team1.bottom].name
+        }`;
+      } else if (!board.value.team1.top && board.value.team1.bottom) {
+        names.team1 = `${players.value[board.value.team1.bottom].name}`;
+      } else if (board.value.team1.top && !board.value.team1.bottom) {
+        names.team1 = `${players.value[board.value.team1.top].name}`;
+      } else if (!board.value.team1.top && !board.value.team1.bottom) {
+        names.team1 = `لم يتم تحديد لاعبى الفريق`;
+      }
 
-    if (board.value.team2.left && board.value.team2.right) {
-      names.team2 = `${players.value[board.value.team2.right].name} | ${
-        players.value[board.value.team2.left].name
-      }`;
-    } else if (!board.value.team2.left && board.value.team2.right) {
-      names.team2 = `${players.value[board.value.team2.right].name}`;
-    } else if (board.value.team2.left && !board.value.team2.right) {
-      names.team2 = `${players.value[board.value.team2.left].name}`;
-    } else if (!board.value.team2.left && !board.value.team2.right) {
-      names.team2 = `لم يتم تحديد لاعبى الفريق`;
+      if (board.value.team2.left && board.value.team2.right) {
+        names.team2 = `${players.value[board.value.team2.right].name} | ${
+          players.value[board.value.team2.left].name
+        }`;
+      } else if (!board.value.team2.left && board.value.team2.right) {
+        names.team2 = `${players.value[board.value.team2.right].name}`;
+      } else if (board.value.team2.left && !board.value.team2.right) {
+        names.team2 = `${players.value[board.value.team2.left].name}`;
+      } else if (!board.value.team2.left && !board.value.team2.right) {
+        names.team2 = `لم يتم تحديد لاعبى الفريق`;
+      }
+      return names;
+    } else {
+      return {
+        team1: board.value.team1.manualName,
+        team2: board.value.team2.manualName,
+      };
     }
-    return names;
   } else {
     return null;
   }

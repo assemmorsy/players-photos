@@ -66,6 +66,12 @@ const router = createRouter({
           props: true,
         },
         {
+          path: "settings",
+          name: "settings",
+          component: () => import("@/components/Settings.vue"),
+        },
+
+        {
           path: "all-sponcers",
           name: "all-sponcers",
           component: () => import("@/components/sponcers/AllSponcers.vue"),

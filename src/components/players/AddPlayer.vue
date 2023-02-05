@@ -73,6 +73,11 @@
             aria-hidden="true"
           ></span>
         </button>
+        <router-link
+          :to="{ name: 'all-players' }"
+          class="btn btn-outline-secondary ms-3 px-3"
+          >الغاء</router-link
+        >
       </div>
     </form>
   </div>

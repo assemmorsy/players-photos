@@ -155,10 +155,10 @@ export default {
   width: var(--score-width);
 }
 .playerOne {
-  right: var(--score-margin);
+  right: var(--score-margin-x);
 }
 .playerTwo {
-  left: var(--score-margin);
+  left: var(--score-margin-x);
 }
 #playerOneElm p,
 #playerTwoElm p {
@@ -178,6 +178,7 @@ export default {
 #playerOneElm {
   position: absolute;
   left: calc((var(--score-radius) / 2) - var(--score-overlap));
+
   border-radius: 0px 50px 15px 0px;
 }
 #playerTwoElm {
@@ -194,6 +195,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 1.1rem;
+  padding-top: 0.5rem;
 }
 .centerPlayerOne {
   left: var(--score-overlap);
@@ -215,13 +218,11 @@ export default {
 }
 #playerOneScoreElm {
   background: linear-gradient(45deg, #32b8f7, #193c73);
-
   left: -3.5rem;
   border-radius: 15px 50px;
 }
 #playerTwoScoreElm {
   background: linear-gradient(45deg, #f6b033, #e4342a);
-
   right: -3.5rem;
   border-radius: 50px 15px;
 }
@@ -231,7 +232,7 @@ export default {
   padding: 0px;
   margin: 0px;
   font-family: "Courier New", Courier, monospace;
-  font-size: 2.7rem;
+  font-size: 3.1rem;
   font-weight: 900;
 }
 </style>

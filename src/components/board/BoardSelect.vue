@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex flex-row justify-content-around align-items-end w-50">
+  <div class="d-flex flex-row justify-content-around align-items-end w-100">
     <i
-      :class="`bi ${icon} d-inline-block ms-3`"
+      :class="`bi ${icon} d-inline-block ms-md-3`"
       style="font-size: 3rem; color: cadetblue"
     ></i>
     <div class="d-inline-block" style="width: 60%">
@@ -17,8 +17,8 @@
     <div class="d-inline-block">
       <preview
         v-if="board[team][model]"
-        :width="70"
-        :height="70"
+        :width="50"
+        :height="50"
         :image="options[board[team][model]].image"
         :coordinates="options[board[team][model]].coordinates"
       />

@@ -1,33 +1,15 @@
 <template>
-  <div class="m-3" v-if="playersArray && sponcersArray && board">
-    <div>
-      <h6 class="lead">اختيار الممولين</h6>
-      <div class="d-flex justify-content-around align-items-end">
-        <BoardSelect
-          label="الممول علي يمين الشاشة"
-          icon="bi-arrow-right-circle"
-          :board="board"
-          :options="sponcers"
-          :options-array="sponcersArray"
-          team="team1"
-          model="sponcer"
-        />
-        <BoardSelect
-          label="الممول علي يسار الشاشة"
-          icon="bi-arrow-left-circle"
-          :board="board"
-          :options="sponcers"
-          :options-array="sponcersArray"
-          team="team2"
-          model="sponcer"
-        />
-      </div>
-    </div>
-
-    <hr />
+  <div class="my-3 mx-md-3" v-if="playersArray && board">
     <div>
       <h6 class="lead">اختيار لاعبين الفريق الاول</h6>
-      <div class="d-flex justify-content-around align-items-end">
+      <div
+        class="
+          d-flex
+          justify-content-around
+          align-items-end
+          flex-column flex-md-row
+        "
+      >
         <BoardSelect
           label="اللاعب الاول (اعلي الشاشة)"
           icon="bi-arrow-up-circle"
@@ -52,7 +34,14 @@
     <hr />
     <div>
       <h6 class="lead">اختيار لاعبين الفريق الثاني</h6>
-      <div class="d-flex justify-content-around align-items-end">
+      <div
+        class="
+          d-flex
+          justify-content-around
+          align-items-end
+          flex-column flex-md-row
+        "
+      >
         <BoardSelect
           label="اللاعب الاول (يمين الشاشه)"
           icon="bi-arrow-right-circle"
@@ -75,21 +64,6 @@
     </div>
 
     <hr />
-    <div class="d-flex justify-content-around">
-      <label for="opacity" class="form-label d-inline-block"
-        >درجة الشفافية : {{ board.opacity }}</label
-      >
-      <input
-        type="range"
-        class="form-range d-inline-block"
-        style="width: 75%"
-        min="0"
-        max="100"
-        step="5"
-        v-model="board.opacity"
-        id="opacity"
-      />
-    </div>
 
     <div class="text-danger">
       {{ updatingError }}
@@ -97,11 +71,37 @@
 
     <div class="text-center">
       <button
-        class="btn btn-warning mt-1 px-5"
+        class="btn btn-info mt-1 px-5"
+        :class="board.hide ? 'btn-info' : 'btn-danger'"
+        @click.prevent="handleToggleHide"
+      >
+        {{ board.hide ? "اظهار النشرة" : "اخفاء النشرة" }}
+        <span
+          v-if="loadingUpdates"
+          class="spinner-border spinner-border-sm ms-3"
+          role="status"
+          aria-hidden="true"
+        ></span>
+      </button>
+      <button
+        class="btn btn-warning mt-1 px-5 mx-3"
         :disabled="loadingUpdates"
         @click.prevent="handleUpdate"
       >
         تحديث
+        <span
+          v-if="loadingUpdates"
+          class="spinner-border spinner-border-sm ms-3"
+          role="status"
+          aria-hidden="true"
+        ></span>
+      </button>
+      <button
+        class="btn btn-success mt-1 px-5"
+        :disabled="loadingUpdates"
+        @click.prevent="handleSaka"
+      >
+        صكة جديدة
         <span
           v-if="loadingUpdates"
           class="spinner-border spinner-border-sm ms-3"
@@ -114,8 +114,6 @@
 </template>
 
 <script setup>
-import { Preview } from "vue-advanced-cropper";
-import vSelect from "vue-select";
 import BoardSelect from "./BoardSelect.vue";
 import useDocument from "@/composables/useDocument";
 import { computed, onBeforeUnmount } from "vue";
@@ -136,22 +134,6 @@ const playersArray = computed(() => {
   return result;
 });
 
-const sponcersArray = computed(() => {
-  let result = null;
-  if (props.sponcers) {
-    result = [
-      {
-        id: null,
-        name: "لا يوجد ممول",
-      },
-    ];
-    for (let sponcerId in props.sponcers) {
-      result.push(props.sponcers[sponcerId]);
-    }
-  }
-  return result;
-});
-
 const {
   error: updatingError,
   isPending: loadingUpdates,
@@ -163,6 +145,15 @@ onBeforeUnmount(async () => {
 });
 const handleUpdate = async () => {
   await updateDoc(props.ENV, props.board);
+};
+const handleSaka = async () => {
+  props.board.team1.scores = [];
+  props.board.team2.scores = [];
+  await handleUpdate();
+};
+const handleToggleHide = async () => {
+  props.board.hide = !props.board.hide;
+  await handleUpdate();
 };
 </script>
 

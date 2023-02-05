@@ -1,16 +1,32 @@
 <template>
   <div class="players m-3">
-    <div class="mb-3 d-flex flex-row justify-content-between align-items-start">
-      <label for="search" class="form-label d-inline-block me-2 fs-3"
-        >بحث</label
+    <div
+      class="
+        mb-3
+        d-flex
+        flex-row
+        justify-content-center
+        align-items-center
+        flex-column flex-md-row
+      "
+    >
+      <div class="d-inline-block">
+        <label for="search" class="form-label d-inline-block me-2 fs-3"
+          >بحث</label
+        >
+        <input
+          type="text"
+          v-model="search"
+          class="form-control d-inline-block"
+          id="search"
+          placeholder="الكلمة المفتاحية للبحث"
+          style="width: 70%"
+        />
+      </div>
+
+      <router-link :to="{ name: 'add-sponcer' }" class="btn btn-primary mt-2"
+        >اضافة ممول</router-link
       >
-      <input
-        type="text"
-        v-model="search"
-        class="form-control d-inline-block"
-        id="search"
-        placeholder="الكلمة المفتاحية للبحث"
-      />
     </div>
     <p class="bg-warning p-1 rounded mb-1" style="font-size: 0.9rem">
       <i class="bi bi-exclamation-triangle p-1"></i>

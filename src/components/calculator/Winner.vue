@@ -40,8 +40,10 @@
 <script>
 import gsap from "gsap";
 import { ref, onMounted } from "vue";
+import { Preview } from "vue-advanced-cropper";
 export default {
-  props: ["winner", "send"],
+  components: { Preview },
+  props: ["winner", "send", "winnerTeam", "players", "board"],
   setup(props) {
     const TIME_AMOUNT_VIEWING_WINNER = 4000;
 

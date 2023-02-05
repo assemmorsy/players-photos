@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="card text-left m-5" style="width: 90%">
+    <div class="card text-left my-5 px-0" style="width: 97%">
       <div class="card-header d-flex flex-row justify-content-between">
         <h2 class="d-inline-block mt-2">لوحة التحكم</h2>
         <button
@@ -18,62 +18,52 @@
         </button>
       </div>
 
-      <div class="card-body">
+      <div class="card-body px-1">
         <ul class="nav nav-tabs">
           <li class="nav-item">
             <router-link
               class="nav-link"
               :class="route.path === '/admin' ? 'active' : ''"
               :to="{ name: 'board' }"
-              >التحكم بالمجلس</router-link
             >
+              <i class="bi bi-microsoft"></i>
+              <!-- التحكم بالمجلس -->
+            </router-link>
           </li>
           <li class="nav-item">
             <router-link
               class="nav-link"
               :class="route.path === '/admin/all-players' ? 'active' : ''"
               :to="{ name: 'all-players' }"
-              >جميع اللاعبين</router-link
             >
-          </li>
-          <li class="nav-item">
-            <router-link
-              class="nav-link"
-              :class="route.path === '/admin/add-player' ? 'active' : ''"
-              :to="{ name: 'add-player' }"
-              >اضافة لاعب
+              <i class="bi bi-people-fill"></i>
+              <!-- جميع اللاعبين -->
             </router-link>
-          </li>
-          <li
-            class="nav-item"
-            v-if="route.path.includes('/admin/update-player')"
-          >
-            <a
-              class="nav-link"
-              :class="
-                route.path.includes('/admin/update-player') ? 'active' : ''
-              "
-              >تعديل لاعب</a
-            >
           </li>
 
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :class="route.path === '/admin/all-sponcers' ? 'active' : ''"
-              :to="{ name: 'all-sponcers' }"
-              >جميع الممولين</router-link
+              :class="route.path === '/admin/settings' ? 'active' : ''"
+              :to="{ name: 'settings' }"
             >
+              <!-- الاعدادات -->
+
+              <i class="bi bi-sliders"></i>
+            </router-link>
           </li>
           <li class="nav-item">
             <router-link
               class="nav-link"
-              :class="route.path === '/admin/add-sponcer' ? 'active' : ''"
-              :to="{ name: 'add-sponcer' }"
-              >اضافة ممول
+              :class="route.path === '/admin/all-sponcers' ? 'active' : ''"
+              :to="{ name: 'all-sponcers' }"
+            >
+              <!-- جميع الممولين -->
+              <i class="bi bi-cash-coin"></i>
             </router-link>
           </li>
-          <li
+
+          <!-- <li
             class="nav-item"
             v-if="route.path.includes('/admin/update-sponcer')"
           >
@@ -84,7 +74,20 @@
               "
               >تعديل ممول
             </a>
-          </li>
+          </li> -->
+
+          <!-- <li
+            class="nav-item"
+            v-if="route.path.includes('/admin/update-player')"
+          >
+            <a
+              class="nav-link"
+              :class="
+                route.path.includes('/admin/update-player') ? 'active' : ''
+              "
+              >تعديل لاعب</a
+            >
+          </li> -->
         </ul>
         <router-view
           :players="players"
@@ -137,11 +140,11 @@ const handleLogout = async () => {
 main {
   background: linear-gradient(to right, #34e89e, #0f3443);
   width: 100vw;
-  height: auto;
+  /* height: auto; */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
   font-family: "CairoSemiBold";
 }
 </style>

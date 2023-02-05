@@ -7,19 +7,19 @@
         </div>
 
         <div class="name">
-          <p>{{ teamsNames.team2 }}</p>
+          <p>{{ teamsNames.team1 }}</p>
         </div>
 
         <preview
           v-if="teamSponcers"
           class="imageContainer"
-          :image="teamSponcers.team2.image"
-          :coordinates="teamSponcers.team2.coordinates"
+          :image="teamSponcers.team1.image"
+          :coordinates="teamSponcers.team1.coordinates"
         />
       </div>
       <div class="detailed-scores">
         <p
-          v-for="(score, index) in state.team2.scores"
+          v-for="(score, index) in state.team1.scores"
           :key="index"
           :data-index="index"
         >
@@ -34,19 +34,19 @@
           <p class="p-0 m-0 pb-1">{{ tweenedScores.playerTwo.toFixed(0) }}</p>
         </div>
         <div class="name">
-          <p>{{ teamsNames.team1 }}</p>
+          <p>{{ teamsNames.team2 }}</p>
         </div>
         <preview
           v-if="teamSponcers"
           class="imageContainer"
-          :image="teamSponcers.team1.image"
-          :coordinates="teamSponcers.team1.coordinates"
+          :image="teamSponcers.team2.image"
+          :coordinates="teamSponcers.team2.coordinates"
         />
       </div>
 
       <div class="detailed-scores">
         <p
-          v-for="(score, index) in state.team1.scores"
+          v-for="(score, index) in state.team2.scores"
           :key="index"
           :data-index="index"
         >
@@ -81,11 +81,11 @@ export default {
     });
     // watch scores for tweening
     watch(
-      () => [props.total.team1, props.total.team2],
+      () => [props.total.team2, props.total.team1],
       () => {
         gsap.to(tweenedScores, {
-          playerOne: props.total.team2,
-          playerTwo: props.total.team1,
+          playerOne: props.total.team1,
+          playerTwo: props.total.team2,
           duration: 0.75,
         });
       }
@@ -339,6 +339,8 @@ export default {
   height: var(--detail-header-height);
   width: var(--detail-header-width);
   margin: 0px;
+  padding-top: 0.5rem;
+  font-size: 2.3rem;
 }
 .name p {
   opacity: 0;

@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="board && players && sponcers"
+    v-if="board && players && sponcers && !board.hide"
     class="position-relative text-center h-100 w-100"
   >
     <component
@@ -50,31 +50,38 @@ const total = computed(() => {
 
 const teamsNames = computed(() => {
   if (board.value && players.value) {
-    let names = {};
-    if (board.value.team1.top && board.value.team1.bottom) {
-      names.team1 = `${players.value[board.value.team1.top].name} | ${
-        players.value[board.value.team1.bottom].name
-      }`;
-    } else if (!board.value.team1.top && board.value.team1.bottom) {
-      names.team1 = `${players.value[board.value.team1.bottom].name}`;
-    } else if (board.value.team1.top && !board.value.team1.bottom) {
-      names.team1 = `${players.value[board.value.team1.top].name}`;
-    } else if (!board.value.team1.top && !board.value.team1.bottom) {
-      names.team1 = `لم يتم تحديد لاعبى الفريق`;
-    }
+    if (board.value.namesControl === "auto") {
+      let names = {};
+      if (board.value.team1.top && board.value.team1.bottom) {
+        names.team1 = `${players.value[board.value.team1.top].name} | ${
+          players.value[board.value.team1.bottom].name
+        }`;
+      } else if (!board.value.team1.top && board.value.team1.bottom) {
+        names.team1 = `${players.value[board.value.team1.bottom].name}`;
+      } else if (board.value.team1.top && !board.value.team1.bottom) {
+        names.team1 = `${players.value[board.value.team1.top].name}`;
+      } else if (!board.value.team1.top && !board.value.team1.bottom) {
+        names.team1 = `لم يتم تحديد لاعبى الفريق`;
+      }
 
-    if (board.value.team2.left && board.value.team2.right) {
-      names.team2 = `${players.value[board.value.team2.right].name} | ${
-        players.value[board.value.team2.left].name
-      }`;
-    } else if (!board.value.team2.left && board.value.team2.right) {
-      names.team2 = `${players.value[board.value.team2.right].name}`;
-    } else if (board.value.team2.left && !board.value.team2.right) {
-      names.team2 = `${players.value[board.value.team2.left].name}`;
-    } else if (!board.value.team2.left && !board.value.team2.right) {
-      names.team2 = `لم يتم تحديد لاعبى الفريق`;
+      if (board.value.team2.left && board.value.team2.right) {
+        names.team2 = `${players.value[board.value.team2.right].name} | ${
+          players.value[board.value.team2.left].name
+        }`;
+      } else if (!board.value.team2.left && board.value.team2.right) {
+        names.team2 = `${players.value[board.value.team2.right].name}`;
+      } else if (board.value.team2.left && !board.value.team2.right) {
+        names.team2 = `${players.value[board.value.team2.left].name}`;
+      } else if (!board.value.team2.left && !board.value.team2.right) {
+        names.team2 = `لم يتم تحديد لاعبى الفريق`;
+      }
+      return names;
+    } else {
+      return {
+        team1: board.value.team1.manualName,
+        team2: board.value.team2.manualName,
+      };
     }
-    return names;
   } else {
     return null;
   }
@@ -137,6 +144,9 @@ const COMPS = computed(() => {
         comp: Winner,
         props: {
           winner: teamsNames.value[winner.value],
+          winnerTeam: winner.value,
+          players: players.value,
+          board: board.value,
           send: send,
         },
       },

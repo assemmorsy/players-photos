@@ -2,12 +2,12 @@
   <main>
     <div class="card text-left" style="width: 40rem">
       <div class="card-header text-center">
-        <h2>Login</h2>
+        <h2>تسجيل دخول</h2>
       </div>
       <div class="card-body">
         <form @submit.prevent="handleSubmit">
           <div class="mb-3">
-            <label for="email" class="form-label">Email address</label>
+            <label for="email" class="form-label">الايميل</label>
             <input
               type="email"
               v-model="userData.email"
@@ -18,7 +18,7 @@
             />
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label">كلمة المرور </label>
             <input
               type="password"
               v-model="userData.password"
@@ -29,10 +29,10 @@
           </div>
           <p class="text-danger">{{ error }}</p>
           <button v-if="!loading" class="btn btn-primary px-5" type="submit">
-            Login
+            دخول
           </button>
           <button v-else class="btn btn-primary px-5" disabled type="submit">
-            Login
+            دخول
           </button>
         </form>
       </div>
