@@ -3,6 +3,22 @@
     <div class="mt-3 ms-3">
       <h3>اعدادات النشرة</h3>
 
+      <div
+        class="my-3 d-flex justify-content-between align-items-end text-center"
+      >
+        <label for="winner" class="form-label d-inline-block me-md-3 me-2 w-25"
+          >نص الفوز</label
+        >
+        <input
+          type="text"
+          class="form-control d-inline-block"
+          name="winner"
+          id="winner"
+          placeholder="النص فوق اسم الفريق الفائز"
+          v-model="board.winnerText"
+        />
+      </div>
+
       <input
         type="radio"
         class="btn-check"

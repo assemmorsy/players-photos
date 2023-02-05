@@ -195,7 +195,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   padding-top: 0.5rem;
 }
 .centerPlayerOne {

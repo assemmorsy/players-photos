@@ -17,8 +17,8 @@ import { useMachine } from "@xstate/vue";
 import { showMachine } from "@/composables/showMachine";
 
 import Score from "@/components/calculator/Score.vue";
-import Winner from "@/components/calculator/Winner.vue";
 import DetailedScore from "@/components/calculator/DetailedScore.vue";
+import WinnerView from "@/components/calculator/WinnerView.vue";
 
 import getDocument from "@/composables/getDocument";
 
@@ -141,12 +141,13 @@ const COMPS = computed(() => {
         },
       },
       Winner: {
-        comp: Winner,
+        comp: WinnerView,
         props: {
-          winner: teamsNames.value[winner.value],
+          // winner: teamsNames.value[winner.value],
           winnerTeam: winner.value,
           players: players.value,
           board: board.value,
+          teamsNames: teamsNames.value,
           send: send,
         },
       },
@@ -185,6 +186,8 @@ watch(
 
 <style scoped>
 * {
+  font-family: "CairoSemiBold";
+
   background-color: rgba(0, 0, 0, 0);
 
   /* background-color: rgba(0, 177, 64); green screen */

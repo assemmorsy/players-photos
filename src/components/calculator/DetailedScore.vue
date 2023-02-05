@@ -22,6 +22,7 @@
           v-for="(score, index) in state.team1.scores"
           :key="index"
           :data-index="index"
+          style="-webkit-text-stroke: 1px #193c73"
         >
           {{ score }}
         </p>
@@ -49,6 +50,7 @@
           v-for="(score, index) in state.team2.scores"
           :key="index"
           :data-index="index"
+          style="-webkit-text-stroke: 1px #193c73"
         >
           {{ score }}
         </p>
