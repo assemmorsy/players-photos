@@ -41,7 +41,7 @@
           <img class="icon" :src="svgs[2]" />
           <img class="icon" :src="svgs[3]" />
         </div>
-        <p class="mx-5" style="font-size: 2.5rem">{{ winner.name }}</p>
+        <p class="mx-5" style="font-size: 2.2rem">{{ winner.name }}</p>
       </div>
 
       <div class="image-container" id="image-container-left">

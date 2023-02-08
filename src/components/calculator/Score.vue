@@ -3,7 +3,18 @@
     <div class="playerOne">
       <div id="playerOneElm" class="bg-dark bg-gradient">
         <div class="centerPlayerOne">
-          <p>{{ team1Name }}</p>
+          <p
+            v-if="
+              team1Name.length > NUMBER_OF_CHARS_TO_TRIGGER ||
+              team2Name.length > NUMBER_OF_CHARS_TO_TRIGGER
+            "
+            class=""
+          >
+            <template v-for="(t, index) in team1Name.split('|')" :key="index">
+              <p class="pb-0">{{ t }}</p>
+            </template>
+          </p>
+          <p v-else>{{ team1Name }}</p>
         </div>
       </div>
 
@@ -22,7 +33,18 @@
       </div>
       <div id="playerTwoElm" class="bg-dark bg-gradient">
         <div class="centerPlayerTwo">
-          <p>{{ team2Name }}</p>
+          <p
+            v-if="
+              team1Name.length > NUMBER_OF_CHARS_TO_TRIGGER ||
+              team2Name.length > NUMBER_OF_CHARS_TO_TRIGGER
+            "
+            class=""
+          >
+            <template v-for="(t, index) in team2Name.split('|')" :key="index">
+              <p class="pb-0">{{ t }}</p>
+            </template>
+          </p>
+          <p v-else>{{ team2Name }}</p>
         </div>
       </div>
     </div>
@@ -42,6 +64,7 @@ export default {
     "send",
   ],
   setup(props) {
+    const NUMBER_OF_CHARS_TO_TRIGGER = 16;
     const tweenedScores = reactive({
       playerOne: 0,
       playerTwo: 0,
@@ -133,18 +156,20 @@ export default {
     return {
       tweenedScores,
       parentElm,
+      NUMBER_OF_CHARS_TO_TRIGGER,
     };
   },
 };
 </script>
 
 <style scoped>
+.hidden-dots {
+  opacity: 0;
+}
 .score-style {
   color: aliceblue;
   width: 100vw;
   font-family: "CairoSemiBold";
-  /* font-family: "arefBold"; */
-
   font-size: 2.4rem;
 }
 .playerOne,
@@ -178,13 +203,12 @@ export default {
 #playerOneElm {
   position: absolute;
   left: calc((var(--score-radius) / 2) - var(--score-overlap));
-
-  border-radius: 0px 50px 15px 0px;
+  border-radius: 0px 15px 50px 0px;
 }
 #playerTwoElm {
   position: absolute;
   right: calc((var(--score-radius) / 2) - var(--score-overlap));
-  border-radius: 50px 0px 0px 15px;
+  border-radius: 15px 0px 0px 50px;
 }
 
 .centerPlayerOne,
@@ -195,8 +219,11 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
-  padding-top: 0.5rem;
+  font-size: 1.5rem;
+  font-family: Cairo;
+  font-weight: 900;
+  /* padding-top: 0.5rem; */
+  line-height: 140%;
 }
 .centerPlayerOne {
   left: var(--score-overlap);
@@ -219,12 +246,12 @@ export default {
 #playerOneScoreElm {
   background: linear-gradient(45deg, #32b8f7, #193c73);
   left: -3.5rem;
-  border-radius: 15px 50px;
+  border-radius: 50px 15px;
 }
 #playerTwoScoreElm {
   background: linear-gradient(45deg, #f6b033, #e4342a);
   right: -3.5rem;
-  border-radius: 50px 15px;
+  border-radius: 15px 50px;
 }
 
 .totalScoreOne,

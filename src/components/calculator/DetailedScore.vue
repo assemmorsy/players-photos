@@ -22,7 +22,7 @@
           v-for="(score, index) in state.team1.scores"
           :key="index"
           :data-index="index"
-          style="-webkit-text-stroke: 1px #193c73"
+          style="-webkit-text-stroke: 1px #000"
         >
           {{ score }}
         </p>
@@ -50,7 +50,7 @@
           v-for="(score, index) in state.team2.scores"
           :key="index"
           :data-index="index"
-          style="-webkit-text-stroke: 1px #193c73"
+          style="-webkit-text-stroke: 1px #000"
         >
           {{ score }}
         </p>
@@ -342,7 +342,7 @@ export default {
   width: var(--detail-header-width);
   margin: 0px;
   padding-top: 0.5rem;
-  font-size: 2.3rem;
+  font-size: 2.1rem;
 }
 .name p {
   opacity: 0;

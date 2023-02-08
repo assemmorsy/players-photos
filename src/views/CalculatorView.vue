@@ -19,11 +19,15 @@ import { showMachine } from "@/composables/showMachine";
 import Score from "@/components/calculator/Score.vue";
 import DetailedScore from "@/components/calculator/DetailedScore.vue";
 import WinnerView from "@/components/calculator/WinnerView.vue";
-
+import useDocument from "@/composables/useDocument";
 import getDocument from "@/composables/getDocument";
-
 import getCollection from "@/composables/getCollectionAsDictionary";
 
+const {
+  error: updatingError,
+  isPending: loadingUpdates,
+  updateDoc,
+} = useDocument("board");
 const { error: boardError, doc: board, getDoc } = getDocument("board");
 const { error: loadingPlayersError, documents: players } =
   getCollection("players");
@@ -164,6 +168,16 @@ const { state: stateMachine, send } = useMachine(showMachine, {
   actions: {
     showScore: () => {
       hideScore.value = false;
+    },
+    trackTheStartingOfAnimation: async () => {
+      console.log("start the animations tracking : true ");
+      board.value.animationRunning = true;
+      updateDoc(ENV, board.value);
+    },
+    trackTheEndingOfAnimation: async () => {
+      console.log("end the animations tracking : false ");
+      board.value.animationRunning = false;
+      updateDoc(ENV, board.value);
     },
   },
 });

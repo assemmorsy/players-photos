@@ -107,7 +107,19 @@
       v-if="winner"
       class="row justify-content-around text-center pt-5 text-success"
     >
-      الفريق الفائز هو فريق <span> ( {{ teamsNames[winner] }} ) </span>
+      <p>
+        الفريق الفائز هو فريق <span> ( {{ teamsNames[winner] }} ) </span>
+        <br />
+      </p>
+      <div v-if="!board.animationRunning">
+        <p class="text-danger">هل تريد بدأ صكة جديدة ؟</p>
+        <button
+          class="btn btn-outline-danger mx-2 px-4"
+          @click.prevent="handleDeleteAll"
+        >
+          نعم
+        </button>
+      </div>
     </div>
 
     <div
@@ -141,7 +153,10 @@
       </div>
     </div>
 
-    <div class="row justify-content-center fixed-bottom mb-3">
+    <div
+      v-if="!board.animationRunning"
+      class="row justify-content-center fixed-bottom mb-3"
+    >
       <div class="col col-2">
         <button
           class="btn btn-warning qayyed rounded-circle"
@@ -343,6 +358,7 @@ const handleQayyed = async () => {
     board.value.team2.scores.push(totalP2);
     tempScores.value.team1 = "";
     tempScores.value.team2 = "";
+    board.value.animationRunning = true;
     await updateDoc(ENV, board.value);
   } else {
     qayyedError.value = "برجاء ادخال النتيجة اقل من او تساوى 300";
